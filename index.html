@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>It is just a joke</title>
+    <style>
+        html,body,div,p,ul,li{
+            margin: 0;
+            padding: 0;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        body{
+            font-family: 'Helvetica Neue';
+        }
+        .main{
+            height: 100%;
+            position: relative;
+        }
+        .middle{
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+        }
+        .timer{
+            height: 100%;
+            font-size: 100px;
+            font-weight: bold;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .timer>span{
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 42px;
+            color: #212108;
+            opacity: .9;
+            -webkit-animation: clock 1s linear infinite;
+            -o-animation: clock 1s linear infinite;
+            animation: clock 1s linear infinite;
+            animation-play-state: paused;
+        }
+        @-webkit-keyframes clock {
+            0%{
+                transform: scale(1);
+                opacity: .9;
+            }
+            40%{
+                transform: scale(1.5);
+                opacity: .9;
+            }
+            100%{
+                transform: scale(1.6);
+                opacity: .1;
+            }
+        }
+        .box-wrapper{
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            display: none;
+        }
+        .box{
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+            width: 300px;
+            height: 180px;
+            border-radius: 6px;
+            background-color: #d6b5bd;
+            opacity: 0;
+            padding: 20px 8px;
+            font-weight: bold;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            -webkit-animation: bShow .5s linear both;
+            -o-animation: bShow .5s linear both;
+            animation: bShow .5s linear both;
+            animation-play-state: paused;
+        }
+        @-webkit-keyframes bShow {
+            from{
+                opacity: 0;
+            }
+            to{
+                opacity: 1;
+            }
+        }
+        .btn{
+            font-size: 14px;
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+        }
+        .btn>div{
+            position: absolute;
+            bottom: 0;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            border-radius: 3px;
+            cursor: pointer;
+            -webkit-transition: .3s;
+            -moz-transition: .3s;
+            -ms-transition: .3s;
+            -o-transition: .3s;
+            transition: .3s;
+        }
+        .btn1{
+            left: 30px;
+            background-color: #bddede;
+        }
+        .btn2{
+            left: 170px;
+            background-color: #73bd8c;
+        }
+        .show{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            display: none;
+        }
+        .re{
+            display: inline-block;
+        }
+        .y{
+            display: inline-block;
+            margin-top: 20px;
+            padding: 6px 12px;
+            border: 1px solid #e2e2e2;
+            box-shadow: 0 0 8px rgba(0,0,0,.3);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="main">
+    <div class="timer">
+        <span id="timer"></span>
+        <div class="middle"></div>
+    </div>
+    <div class="box-wrapper">
+        <div class="box" id="box">
+            <p class="box-text">你是撒比吗？</p>
+            <div class="btn" id="btn">
+                <div class="btn1" id="btn1">是的</div>
+                <div class="btn2" id="btn2">不是</div>
+            </div>
+        </div>
+        <div class="middle"></div>
+    </div>
+    <div class="show" id="show1">
+        <div class="re" id="re1">
+            <p>你能有这样的自我意识，爸爸很高兴！</p>
+            <div class="y">确定</div>
+        </div>
+        <div class="middle"></div>
+    </div>
+    <div class="show" id="show2">
+        <div class="re" id="re2">
+            <p>自欺欺人是不对的</p>
+            <div class="y">确定</div>
+        </div>
+        <div class="middle"></div>
+    </div>
+</div>
+<script>
+    var tWrapper=document.getElementsByClassName('timer')[0];
+    var bWrapper=document.getElementsByClassName('box-wrapper')[0];
+    var tNum=document.getElementById('timer');
+    var box=document.getElementById('box');
+    var timer;
+    var ii=3;
+    timer=setInterval(fnTimer,1000);
+    function fnTimer(){
+        tNum.style.animationPlayState='running';
+        tNum.innerHTML=ii;
+        ii--;
+        if(ii<-1){
+            tWrapper.style.display='none';
+            bWrapper.style.display='block';
+            box.style.animationPlayState='running';
+        }
+        if(ii<-2){
+            clearInterval(timer);
+            tNum.style.animationPlayState='paused';
+        }
+    }
+    var i=0;
+    var btn=document.getElementById('btn');
+    var btn1=document.getElementById('btn1');
+    var btn2=document.getElementById('btn2');
+    btn.onmouseover=function(e){
+        var e=event||window.event;
+        var target=e.target||e.srcElement;
+        if(target.nodeName.toLowerCase()=='div'){
+            if(target.id=='btn2'){
+                i++;
+                console.log(i);
+                fnAction(i);
+            }
+        }
+    }
+    function fnAction(index){
+        switch (index){
+            case 1:
+                btn1.style.left='170px';
+                btn2.style.left='30px';
+                break;
+            case 2:
+                btn1.style.left='30px';
+                btn2.style.left='170px';
+                break;
+            case 3:
+                btn1.style.left='170px';
+                btn2.style.left='30px';
+                break;
+            case 4:
+                btn2.style.bottom='70px';
+                break;
+            case 5:
+                btn2.style.left='170px';
+                break;
+            case 6:
+                btn1.style.left='30px';
+                btn2.style.left='170px';
+                btn2.style.bottom='0px';
+                break;
+            default:
+                btn1.style.left='30px';
+                btn2.style.left='170px';
+                btn2.style.bottom='0px';
+        }
+    }
+    var show1=document.getElementById('show1');
+    var show2=document.getElementById('show2');
+    var re1=document.getElementById('re1');
+    var re2=document.getElementById('re2');
+    btn1.onclick=function(){
+        bWrapper.style.display='none';
+        show1.style.display='block';
+    }
+    btn2.onclick=function(){
+        bWrapper.style.display='none';
+        show2.style.display='block';
+    }
+    document.getElementById('re1').onclick=function(){
+        re1.innerText='乖乖的，爸爸看好你！';
+        setTimeout(function(){window.location.reload();},2000);
+
+    }
+    document.getElementById('re2').onclick=function(){
+        re2.innerText='我去，还敢点确定！';
+        setTimeout(function(){window.location.reload();},2000);
+    }
+</script>
+</body>
+</html>
